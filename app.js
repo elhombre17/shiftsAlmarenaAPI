@@ -7,10 +7,7 @@ import path from "path";
 const app = express();
 
 // --- CORS ---
-app.use(cors({
-  origin: "https://turnos-desayuno.vercel.app/", // cambiá por tu dominio real
-  methods: ["GET","POST","PUT","DELETE"]
-}));
+app.use(cors());
 
 // --- Crear carpeta uploads si no existe ---
 const uploadsPath = path.join(process.cwd(), "uploads");
@@ -51,5 +48,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
 
 
