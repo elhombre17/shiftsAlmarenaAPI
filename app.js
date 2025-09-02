@@ -8,7 +8,7 @@ const app = express();
 
 // --- CORS ---
 app.use(cors({
-  origin: "https://tu-front.vercel.app", // cambiá por tu dominio real
+  origin: "https://turnos-desayuno.vercel.app/", // cambiá por tu dominio real
   methods: ["GET","POST","PUT","DELETE"]
 }));
 
@@ -51,4 +51,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
 
