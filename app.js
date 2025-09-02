@@ -42,8 +42,10 @@ app.post("/uploads", upload.fields([
     }
 );
 
-app.listen(PORT, HOST, () => {
-  console.log(`Servidor corriendo en http://${HOST}:${PORT}`);
+// --- app.listen al final ---
+const PORT = process.env.PORT || 3000; // Render asigna PORT dinámicamente
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
 
 
@@ -79,3 +81,4 @@ exportExcel(combinado);
 
 console.log(combinado)
 */
+
