@@ -32,11 +32,11 @@ app.post("/uploads", upload.fields([
   // --- Aquí procesás los archivos ---
   // Ejemplo: generar un archivo nuevo llamado Turnos_Desayunos.xlsx
   generar()
-  const newFilePath = path.join(uploadsPath, "Turnos_Desayunos.xlsx");
+  const filePath = "Turnos_Desayunos.xlsx";
   // reemplazar con tu función generar()
 
   // --- Enviar archivo al frontend ---
-  res.download(newFilePath, "Turnos_Desayunos.xlsx", (err) => {
+  res.download(filePath, "Turnos_Desayunos.xlsx", (err) => {
     if (err) {
       console.error("Error al enviar archivo:", err);
       res.status(500).send("Error al generar la descarga");
@@ -49,6 +49,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
 
 
 
