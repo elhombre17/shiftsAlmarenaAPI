@@ -28,12 +28,12 @@ app.post("/uploads", upload.fields([
   { name: "reporte", maxCount: 1 },
   { name: "turnos", maxCount: 1 }
 ]), (req, res) => {
-  console.log("Archivos recibidos:", req.files);
 
   // --- Aquí procesás los archivos ---
   // Ejemplo: generar un archivo nuevo llamado Turnos_Desayunos.xlsx
+  generar()
   const newFilePath = path.join(uploadsPath, "Turnos_Desayunos.xlsx");
-  generar() // reemplazar con tu función generar()
+  // reemplazar con tu función generar()
 
   // --- Enviar archivo al frontend ---
   res.download(newFilePath, "Turnos_Desayunos.xlsx", (err) => {
@@ -49,6 +49,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
 
 
 
