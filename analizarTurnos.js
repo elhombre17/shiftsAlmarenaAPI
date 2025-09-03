@@ -33,7 +33,7 @@ function limpiarTurnos (reporte, inicio){
         let datos = XLSX.utils.sheet_to_json(hoja, { header: 1 });
     
         const fin = datos.findIndex(word => word.includes("Page"));
-
+        /*
         function checkAccion(accion){
             if(accion == undefined){
                 return "en NOI";
@@ -41,11 +41,11 @@ function limpiarTurnos (reporte, inicio){
                 return accion; 
             }
         }
-    
+        */ 
         datos = datos.slice(inicio, fin-1).map(fila => {
             //let fecha = convertirFechaHoraExcel(fila[3]);
-            let accion = checkAccion(fila[2]);
-            return [fila[0], accion, fila[3], fila[4], fila[5], fila[8]]; 
+           // let accion = checkAccion(fila[2]);
+            return [fila[0], fila[2], fila[3], fila[4], fila[5], fila[8]]; 
         })
     
         return datos; 
@@ -71,4 +71,5 @@ export function desayunosDiaDos(reporte, inicio){
         let [fecha, hora] = fechaConvertida.split(" ");
         return fecha == diaDos;
     });
+
 }
