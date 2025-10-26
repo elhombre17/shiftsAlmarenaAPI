@@ -59,7 +59,7 @@ app.get("/downloadReporte", async (req, res) => {
         res.download(filePath, "Turnos_Desayunos.xlsx", (err) => {
             if (err) {
             console.error("Error al enviar archivo:", err);
-            res.status(500).send("Error al generar la descarga");
+            res.status(500).send("Error al generar lalalalala descarga"");
             }
         })
      }
@@ -110,3 +110,4 @@ exportExcel(combinado);
 
 console.log(combinado)
 */
+
