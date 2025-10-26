@@ -1,25 +1,22 @@
 import XLSX from 'xlsx'
 import convertirFechaHoraExcel from './serialExceltoString.js';
 
-function obtenerDiaDeManana(sumarDia) {
+function obtenerDia(sumarDia, fechaInicio) {
   // Obtener fecha y hora actuales en Argentina
-  const ahora = new Date();
-  const ahoraArgentina = new Date(
-    ahora.toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" })
-  );
+  const fecha = new Date(`${fechaInicio}T00:00:01`);
+
+  console.log(fecha);
 
   // Sumar un día
-  ahoraArgentina.setDate(ahoraArgentina.getDate() + sumarDia);
+  fecha.setDate(fecha.getDate() + sumarDia);
 
   // Formatear en YYYY-MM-DD
-  const yyyy = ahoraArgentina.getFullYear();
-  const mm = String(ahoraArgentina.getMonth() + 1).padStart(2, "0");
-  const dd = String(ahoraArgentina.getDate()).padStart(2, "0");
+  const yyyy = fecha.getFullYear();
+  const mm = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dd = String(fecha.getDate()).padStart(2, "0");
 
   return `${dd}-${mm}-${yyyy}`;
 }
-
-console.log(obtenerDiaDeManana(0));
 
 
 function limpiarTurnos (reporte, inicio){
@@ -33,43 +30,30 @@ function limpiarTurnos (reporte, inicio){
         let datos = XLSX.utils.sheet_to_json(hoja, { header: 1 });
     
         const fin = datos.findIndex(word => word.includes("Page"));
-        /*
-        function checkAccion(accion){
-            if(accion == undefined){
-                return "en NOI";
-            }else{
-                return accion; 
-            }
-        }
-        */ 
-        datos = datos.slice(inicio, fin-1).map(fila => {
-            //let fecha = convertirFechaHoraExcel(fila[3]);
-           // let accion = checkAccion(fila[2]);
+
+        datos = datos.slice(inicio, fin-1).map(fila => {            
             return [fila[0], fila[2], fila[3], fila[4], fila[5], fila[8]]; 
         })
-    
+
         return datos; 
 }
 
-export function desayunosDiaUno(reporte, inicio){
+export function desayunosDiaUno(reporte, inicio, fechaInicio){
     const datos = limpiarTurnos(reporte, inicio)
-    const diaUno = obtenerDiaDeManana(1);
-    console.log(diaUno)
-     return datos.filter(fila => {
+    const diaUno = obtenerDia(0, fechaInicio);
+    return datos.filter(fila => {
         const fechaConvertida = convertirFechaHoraExcel(fila[2]);
         let [fecha, hora] = fechaConvertida.split(" ");
         return fecha == diaUno;
     });
 }
 
-export function desayunosDiaDos(reporte, inicio){
+export function desayunosDiaDos(reporte, inicio, fechaInicio){
     const datos = limpiarTurnos(reporte, inicio)
-    let diaDos = obtenerDiaDeManana(2);
-    console.log(diaDos)
+    let diaDos = obtenerDia(1, fechaInicio);
      return datos.filter(fila => {
         const fechaConvertida = convertirFechaHoraExcel(fila[2]);
         let [fecha, hora] = fechaConvertida.split(" ");
         return fecha == diaDos;
     });
-
 }

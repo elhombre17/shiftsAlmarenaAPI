@@ -2,14 +2,19 @@ import convertirFechaHoraExcel from './serialExceltoString.js';
 
 export default function combinados(datosReporte, datosTurnosDiaUno, datosTurnosDiaDos){
     let combinado = []; 
+    let errorPax = [];
     let sinTurno = new Set();
     datosReporte.forEach(filaReporte => {
         let tieneTurno = false;
         datosTurnosDiaUno.forEach(filaTurnos => {
-            if (filaTurnos[5] === filaReporte[0]) {
+            if (filaTurnos[5] == filaReporte[0] && !filaTurnos[1]?.toLowerCase().includes("error")) {
                 const nuevaFila = [filaTurnos[2], filaTurnos[0], filaTurnos[1], filaTurnos[3], filaTurnos[4], filaTurnos[5]];
                 combinado.push(nuevaFila);
                 tieneTurno = true;
+                if(filaReporte[2] != filaTurnos[3]){
+                    //console.log("Diferencia en la habitacion: ", filaTurnos[5]);
+                    errorPax.push(filaTurnos[5]);
+                }
             }
         });
 
@@ -42,8 +47,10 @@ export default function combinados(datosReporte, datosTurnosDiaUno, datosTurnosD
     let diaDos = [];
     
     datosTurnosDiaDos.forEach(filaTurnos => {
-        const fila = [filaTurnos[2], filaTurnos[0], filaTurnos[1], filaTurnos[3], filaTurnos[4], filaTurnos[5]];
-        diaDos.push(fila);
+        if (!filaTurnos[1]?.toLowerCase().includes("error")){
+            const fila = [filaTurnos[2], filaTurnos[0], filaTurnos[1], filaTurnos[3], filaTurnos[4], filaTurnos[5]];
+            diaDos.push(fila);
+        }
     })     
 
     diaDos.sort((a, b) => a[0] - b[0])
@@ -58,5 +65,5 @@ export default function combinados(datosReporte, datosTurnosDiaUno, datosTurnosD
 
     combinado = [...combinado, ...diaDos];
 
-    return combinado;
+    return { combinado, errorPax };
 }
