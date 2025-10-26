@@ -13,7 +13,7 @@ const datosReporte = limpiarReporte(reporteDesayuno, inicioDesayuno);
 //console.log(datosReporte)
 
 // Limpiar Listado de Turnos
-const reporteTurno = "uploads/turnos.xlsx"
+const reporteTurno = "uploads/turnos.xls"
 const inicioTurno = 4; 
 
 const datosTurnosDiaUno = desayunosDiaUno(reporteTurno, inicioTurno, fechaInicio);
@@ -35,4 +35,5 @@ const { combinado, errorPax } = combinados(datosReporte, datosTurnosDiaUno, dato
 return errorPax;
 
 }
+
 
